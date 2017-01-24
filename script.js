@@ -1,8 +1,8 @@
-const paths = document.querySelectorAll("path");
 const links = document.querySelectorAll("a");
+const toPathsArray = [];
+const fromPathsArray = [];
 
-//[].forEach.call(paths, hexToRgb);
-
+// click on link listener
 Array.from(links).forEach(link => {
     link.addEventListener("click", function(event) {
         event.preventDefault();
@@ -12,27 +12,36 @@ Array.from(links).forEach(link => {
     });
 });
 
-// function hexToRgb(path) {
-//     const points = path.getAttribute("fill").substring(1);
-//     const bigint = parseInt(points, 16);
-//     const r = (bigint >> 16) & 255;
-//     const g = (bigint >> 8) & 255;
-//     const b = bigint & 255;
-//     const color = r + "," + g + "," + b;
+// get d attribute of path using regex
+const getCoordinates = function(path) {
+    return path.getAttribute("d").match(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/);
+};
 
-//     path.setAttribute("fill", `rgb( ${color})`);
-// }
+function animatePaths() {
+    // animate d attr
+    toPathsArray.forEach((obj, i) => {
+        TweenLite.to(obj, 1, { x0: fromPathsArray[i].x0, y0: fromPathsArray[i].y0, L0: fromPathsArray[i].L0, L1: fromPathsArray[i].L1, L2: fromPathsArray[i].L2, join: fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
+            document.querySelector(".visible").querySelectorAll("path")[i].setAttribute("d", `M${obj.x0},${obj.y0}L${obj.L0} ${obj.L1} ${obj.L2} ${obj.join}z`);
+        } });
+    });
+    
+    // animate color
+    Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
+        const fromColor = path.getAttribute("fill");
+        const toColor = fromPathsArray[i].fill;
 
-const toPathsArray = [];
-const fromPathsArray = [];
+        TweenMax.to(path, 1, { fill: toColor });
+    });
+}
 
+// add d attribute values to arrays
 function getPaths(animateTo) {
     const toPaths = document.getElementById(animateTo).querySelectorAll("path");
 
     Array.from(toPaths).forEach((path, i) => {
         const pathObj = {};
 
-        const coordinates = toPaths[i].getAttribute("d").match(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/);
+        const coordinates = getCoordinates(toPaths[i]);
 
         pathObj.fill = toPaths[i].getAttribute("fill");
         pathObj.x0 = coordinates[1];
@@ -42,13 +51,10 @@ function getPaths(animateTo) {
         pathObj.L2 = coordinates[5];
         pathObj.join = coordinates[6];
         fromPathsArray.push(pathObj);
-
-        // console.log(toPaths[i].getAttribute("d"))
-        // console.log(pathObj.join)
     });
 
     Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
-        const coordinates = path.getAttribute("d").match(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/);
+        const coordinates = getCoordinates(path);
         const toPathObj = {};
 
         toPathObj.fill = toPaths[i].getAttribute("fill");
@@ -63,26 +69,18 @@ function getPaths(animateTo) {
     });
 
     animatePaths();
-
-    function animatePaths() {
-        toPathsArray.forEach((obj, i) => {
-            TweenLite.to(obj, 1, {x0:fromPathsArray[i].x0, y0:fromPathsArray[i].y0, L0:fromPathsArray[i].L0, L1:fromPathsArray[i].L1, L2:fromPathsArray[i].L2, join:fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
-
-                document.querySelector(".visible").querySelectorAll("path")[i].setAttribute("d" , `M${obj.x0},${obj.y0}L${obj.L0} ${obj.L1} ${obj.L2} ${obj.join}z`);
-            } }); 
-
-        });
-        
-        Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
-            const fromColor = path.getAttribute("fill");
-            const toColor = fromPathsArray[i].fill;
-
-            console.log(toColor)
-            console.log(fromColor)
-            console.log(path)
-            TweenMax.to(path, 1, { fill: toColor });
-        });
-    }
 }
 
+
+// [].forEach.call(paths, hexToRgb);
+// function hexToRgb(path) {
+//     const points = path.getAttribute("fill").substring(1);
+//     const bigint = parseInt(points, 16);
+//     const r = (bigint >> 16) & 255;
+//     const g = (bigint >> 8) & 255;
+//     const b = bigint & 255;
+//     const color = r + "," + g + "," + b;
+
+//     path.setAttribute("fill", `rgb( ${color})`);
+// }
 
