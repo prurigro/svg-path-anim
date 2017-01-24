@@ -1,32 +1,4 @@
-let toPathsArray = [];
-let fromPathsArray = [];
-
-// get d attribute of path using regex
-function getCoordinates(path) {
-    return path.getAttribute("d").match(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/);
-}
-
-function animatePaths() {
-    // animate d attr
-    toPathsArray.forEach((obj, i) => {
-        TweenLite.to(obj, 1, { x0: fromPathsArray[i].x0, y0: fromPathsArray[i].y0, L0: fromPathsArray[i].L0, L1: fromPathsArray[i].L1, L2: fromPathsArray[i].L2, join: fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
-            document.querySelector(".visible").querySelectorAll("path")[i].setAttribute("d", `M${obj.x0},${obj.y0}L${obj.L0} ${obj.L1} ${obj.L2} ${obj.join}z`);
-        } });
-    });
-
-    // animate color
-    Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
-        const fromColor = path.getAttribute("fill");
-        const toColor = fromPathsArray[i].fill;
-
-        TweenMax.to(path, 1, { fill: toColor });
-    });
-}
-
-function getPathsArray(object) {
-    const pathsArray = [];
-
-    Array.from(object).forEach((path, const links = document.querySelectorAll("a");
+const links = document.querySelectorAll("a");
 let toPathsArray = [];
 let fromPathsArray = [];
 let animateTo;
@@ -112,39 +84,3 @@ Array.from(links).forEach(link => {
 //     path.setAttribute("fill", `rgb( ${color})`);
 // }
 
-i) => {
-        const coordinates = getCoordinates(path);
-        const pathObj = {};
-
-        pathObj.fill = toPaths[i].getAttribute("fill");
-        pathObj.x0 = coordinates[1];
-        pathObj.y0 = coordinates[2];
-        pathObj.L0 = coordinates[3];
-        pathObj.L1 = coordinates[4];
-        pathObj.L2 = coordinates[5];
-        pathObj.join = coordinates[6];
-
-        pathsArray.push(pathObj);
-    });
-
-    return pathsArray;
-}
-
-function getPaths(animateTo) {
-    toPathsArray = getPathsArray(document.querySelector(".visible").querySelectorAll("path"));
-    animatePaths();
-    fromPathsArray = toPathsArray;
-}
-
-// populate the fromPathsArray with the initial state
-fromPathsArray = getPathsArray(document.getElementById(animateTo).querySelectorAll("path"));
-
-// click on link listener
-Array.from(document.querySelectorAll("a")).forEach(link => {
-    link.addEventListener("click", function(event) {
-        event.preventDefault();
-        const animateTo = this.getAttribute("href").substring(1);
-
-        getPaths(animateTo);
-    });
-});
