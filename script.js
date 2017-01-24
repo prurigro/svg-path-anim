@@ -45,11 +45,9 @@ function getPaths(animateTo) {
 
         // console.log(toPaths[i].getAttribute("d"))
         // console.log(pathObj.join)
-
     });
 
     Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
-
         // TweenLite.to(fromPathObj, 1, { x0: pathObj.x0, onUpdate: function() {
    //          path.setAttribute("d",`M${pathObj.x0},${pathObj.y0}L${pathObj.L0} ${pathObj.L1} ${pathObj.L2} ${pathObj.join}z`);
    //      } });
