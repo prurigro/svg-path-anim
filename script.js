@@ -1,5 +1,5 @@
 
-// get d attribute of path using regex
+// get points of polygons using regex
 const getCoordinates = function(path) {
     return path.getAttribute("points").match(/(-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)/);
 };
@@ -7,17 +7,16 @@ const getCoordinates = function(path) {
 const links = document.querySelectorAll("a");
 let toPathsArray = [];
 let fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySelectorAll("polygon"));
-let animateTo = "nat";
 
 // click on link listener
 Array.from(links).forEach(link => {
     link.addEventListener("click", function(event) {
         event.preventDefault();
         const animateTo = this.getAttribute("href").substring(1);
+
         getPaths(animateTo);
     });
 });
-
 
 function getPathsArray(object) {
     const pathsArray = [];
@@ -42,10 +41,11 @@ function getPathsArray(object) {
 }
 
 function animatePaths() {
-    // animate d attr
+    // animate polygon points attr
     const polygons = Array.from(document.querySelector(".svg-holder").querySelectorAll("polygon"));
-    console.log(fromPathsArray[0])
-    console.log(toPathsArray[0])
+
+    console.log(fromPathsArray[0]);
+    console.log(toPathsArray[0]);
 
     fromPathsArray.forEach((obj, i) => {
         TweenLite.to(obj, 1, { x0: toPathsArray[i].x0, y0: toPathsArray[i].y0, L0: toPathsArray[i].L0, L1: toPathsArray[i].L1, L2: toPathsArray[i].L2, join: toPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
@@ -62,7 +62,7 @@ function animatePaths() {
     });
 }
 
-// add d attribute values to arrays
+// add points attribute values to arrays
 function getPaths(animateTo) {
     toPathsArray = getPathsArray(document.getElementById(animateTo).querySelectorAll("polygon"));
 
