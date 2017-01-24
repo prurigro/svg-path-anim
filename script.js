@@ -1,7 +1,13 @@
+
+// get d attribute of path using regex
+const getCoordinates = function(path) {
+    return path.getAttribute("points").match(/(-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)/);
+};
+
 const links = document.querySelectorAll("a");
 let toPathsArray = [];
-let fromPathsArray = [];
-let animateTo ="nat";
+let fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySelectorAll("polygon"));
+let animateTo = "nat";
 
 // click on link listener
 Array.from(links).forEach(link => {
@@ -12,10 +18,6 @@ Array.from(links).forEach(link => {
     });
 });
 
-// get d attribute of path using regex
-const getCoordinates = function(path) {
-    return path.getAttribute("points").match(/(-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)/);
-};
 
 function getPathsArray(object) {
     const pathsArray = [];
@@ -60,12 +62,12 @@ function animatePaths() {
     });
 }
 
-fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySelectorAll("polygon"));
 
 // add d attribute values to arrays
 function getPaths(animateTo) {
     toPathsArray = getPathsArray(document.getElementById(animateTo).querySelectorAll("polygon"));
 
     animatePaths();
+    
     fromPathsArray = toPathsArray;
 }
