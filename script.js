@@ -62,12 +62,11 @@ function animatePaths() {
     });
 }
 
-
 // add d attribute values to arrays
 function getPaths(animateTo) {
     toPathsArray = getPathsArray(document.getElementById(animateTo).querySelectorAll("polygon"));
 
     animatePaths();
-    
+
     fromPathsArray = toPathsArray;
 }
