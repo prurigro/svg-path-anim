@@ -46,17 +46,17 @@ function animatePaths() {
     console.log(toPathsArray[0])
 
     fromPathsArray.forEach((obj, i) => {
-        TweenLite.to(obj, 2, { x0: toPathsArray[i].x0, y0: toPathsArray[i].y0, L0: toPathsArray[i].L0, L1: toPathsArray[i].L1, L2: toPathsArray[i].L2, join: toPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
+        TweenLite.to(obj, 1, { x0: toPathsArray[i].x0, y0: toPathsArray[i].y0, L0: toPathsArray[i].L0, L1: toPathsArray[i].L1, L2: toPathsArray[i].L2, join: toPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
             polygons[i].setAttribute("points", `${obj.x0},${obj.y0} ${obj.L0},${obj.L1} ${obj.L2},${obj.join}`);
         } });
     });
-    
+
     // animate color
     Array.from(document.querySelector(".svg-holder").querySelectorAll("polygon")).forEach((path, i) => {
         const fromColor = fromPathsArray[i].fill;
         const toColor = toPathsArray[i].fill;
 
-        TweenMax.to(path, 2, { fill: toColor });
+        TweenMax.to(path, 1, { fill: toColor });
     });
 }
 
