@@ -32,20 +32,15 @@ function getPaths(animateTo) {
     const toPaths = document.getElementById(animateTo).querySelectorAll("path");
 
     Array.from(toPaths).forEach((path, i) => {
-        const d = toPaths[i].getAttribute("d");
+        const coordinates = toPaths[i].getAttribute("d").match(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/);
 
         pathObj.fill = toPaths[i].getAttribute("fill");
+        pathObj.x0 = coordinates[1];
+        pathObj.y0 = coordinates[2];
 
-        d.replace(/M(-?[0-9][0-9]*),(-?[0-9][0-9]*)L(-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)\ (-?[0-9][0-9]*)z/, (match, x0, y0, $3, $4, $5, $6) => {
-            pathObj.x0 = x0;
-            pathObj.y0 = y0;
-            
-            return match;
-        });
-
-        // console.log(d)
-        // console.log(pathObj.x0)
-        // console.log(pathObj.y0)
+        console.log(toPaths[i].getAttribute("d"))
+        console.log(pathObj.x0)
+        console.log(pathObj.y0)
 
         toPathsArray.push(pathObj);
     });
