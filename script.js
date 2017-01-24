@@ -66,12 +66,21 @@ function getPaths(animateTo) {
 
     function animatePaths() {
         toPathsArray.forEach((obj, i) => {
-            console.log(obj.x0)
-            console.log(fromPathsArray[i].x0)
             TweenLite.to(obj, 1, {x0:fromPathsArray[i].x0, y0:fromPathsArray[i].y0, L0:fromPathsArray[i].L0, L1:fromPathsArray[i].L1, L2:fromPathsArray[i].L2, join:fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
 
                 document.querySelector(".visible").querySelectorAll("path")[i].setAttribute("d" , `M${obj.x0},${obj.y0}L${obj.L0} ${obj.L1} ${obj.L2} ${obj.join}z`);
             } }); 
+
+        });
+        
+        Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
+            const fromColor = path.getAttribute("fill");
+            const toColor = fromPathsArray[i].fill;
+
+            console.log(toColor)
+            console.log(fromColor)
+            console.log(path)
+            TweenLite.to(path,1, {fill: "red"});
         });
     }
 }
