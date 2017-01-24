@@ -46,7 +46,6 @@ function getPaths(animateTo) {
         // console.log(toPaths[i].getAttribute("d"))
         // console.log(pathObj.join)
 
-        toPathsArray.push(pathObj);
     });
 
     Array.from(document.querySelector(".visible").querySelectorAll("path")).forEach((path, i) => {
