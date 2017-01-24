@@ -37,10 +37,14 @@ function getPaths(animateTo) {
         pathObj.fill = toPaths[i].getAttribute("fill");
         pathObj.x0 = coordinates[1];
         pathObj.y0 = coordinates[2];
+        pathObj.L0 = coordinates[3];
+        pathObj.L1 = coordinates[4];
+        pathObj.L2 = coordinates[5];
+        pathObj.join = coordinates[6];
+        toPathsArray.push(pathObj);
 
-        console.log(toPaths[i].getAttribute("d"))
-        console.log(pathObj.x0)
-        console.log(pathObj.y0)
+        // console.log(toPaths[i].getAttribute("d"))
+        // console.log(pathObj.join)
 
         toPathsArray.push(pathObj);
     });
