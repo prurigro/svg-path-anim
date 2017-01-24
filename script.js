@@ -14,14 +14,16 @@ Array.from(links).forEach(link => {
 
 // get d attribute of path using regex
 const getCoordinates = function(path) {
-    return path.getAttribute("points").match(/(-?[0-9][0-9]*),(-?[0-9][0-9]*)\ (-?[0-9][0-9]*),(-?[0-9][0-9]*)\ (-?[0-9][0-9]*),(-?[0-9][0-9]*)/);
+    return path.getAttribute("points").match(/(-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)\ (-?[0-9][0-9\.]*),(-?[0-9][0-9\.]*)/);
 };
 
 function animatePaths() {
     // animate d attr
+    const polygons = Array.from(document.querySelector(".svg-holder").querySelectorAll("polygon"));
+
     toPathsArray.forEach((obj, i) => {
         TweenLite.to(obj, 2, { x0: fromPathsArray[i].x0, y0: fromPathsArray[i].y0, L0: fromPathsArray[i].L0, L1: fromPathsArray[i].L1, L2: fromPathsArray[i].L2, join: fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
-            document.querySelector(".visible").querySelectorAll("polygon")[i].setAttribute("points", `${obj.x0},${obj.y0} ${obj.L0},${obj.L1} ${obj.L2},${obj.join}`);
+            polygons[i].setAttribute("points", `${obj.x0},${obj.y0} ${obj.L0},${obj.L1} ${obj.L2},${obj.join}`);
         } });
     });
     
@@ -42,7 +44,6 @@ function getPaths(animateTo) {
         const pathObj = {};
 
         const coordinates = getCoordinates(toPaths[i]);
-
 
         pathObj.fill = toPaths[i].getAttribute("fill");
         pathObj.x0 = coordinates[1];
