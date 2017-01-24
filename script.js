@@ -20,7 +20,7 @@ const getCoordinates = function(path) {
 function animatePaths() {
     // animate d attr
     toPathsArray.forEach((obj, i) => {
-        TweenLite.to(obj, 1, { x0: fromPathsArray[i].x0, y0: fromPathsArray[i].y0, L0:fromPathsArray[i].L0, L1: fromPathsArray[i].L1, L2: fromPathsArray[i].L2, join: fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
+        TweenLite.to(obj, 2, { x0: fromPathsArray[i].x0, y0: fromPathsArray[i].y0, L0: fromPathsArray[i].L0, L1: fromPathsArray[i].L1, L2: fromPathsArray[i].L2, join: fromPathsArray[i].join, ease: Power4.easeOut, onUpdate: function() {
             document.querySelector(".visible").querySelectorAll("polygon")[i].setAttribute("points", `${obj.x0},${obj.y0} ${obj.L0},${obj.L1} ${obj.L2},${obj.join}`);
         } });
     });
@@ -30,7 +30,7 @@ function animatePaths() {
         const fromColor = path.getAttribute("fill");
         const toColor = toPathsArray[i].fill;
 
-        TweenMax.to(path, 1, { fill: toColor });
+        TweenMax.to(path, 2, { fill: toColor });
     });
 }
 
