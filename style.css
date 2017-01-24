@@ -1,4 +1,3 @@
-svg:nth-child(1) {display: none;}
 ul {
 	z-index:1;
 	position: absolute;
@@ -7,9 +6,7 @@ ul {
 #nat {
 	width: 100%;
 	height: 100vh;
-	background-color: #6f736e;
+	background-color: #fff;
 }
+#yeojin {display: none;}
 
-#yeojin {
-	background-color: #d4c8bd;
-}
