@@ -9,14 +9,24 @@ let toPathsArray = [];
 let fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySelectorAll("polygon"));
 
 // click on link listener
-Array.from(links).forEach(link => {
-    link.addEventListener("click", function(event) {
+[].forEach.call(links, function(el, i, els) {
+    el.addEventListener('click', function() {
+        [].forEach.call(els, function(el) {
+            if(el !== this) {
+                el.classList.remove("active");
+            } else {
+                this.classList.add("active");
+            }
+        }, this);
+
         event.preventDefault();
         const animateTo = this.getAttribute("href").substring(1);
+        this.classList.add("active");
 
         getPaths(animateTo);
     });
 });
+
 
 function getPathsArray(object) {
     const pathsArray = [];
