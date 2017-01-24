@@ -1,7 +1,7 @@
 const paths = document.querySelectorAll("path");
 const links = document.querySelectorAll("a");
 
-[].forEach.call(paths, hexToRgb);
+//[].forEach.call(paths, hexToRgb);
 
 Array.from(links).forEach(link => {
     link.addEventListener("click", function(event) {
@@ -12,16 +12,16 @@ Array.from(links).forEach(link => {
     });
 });
 
-function hexToRgb(path) {
-    const points = path.getAttribute("fill").substring(1);
-    const bigint = parseInt(points, 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    const color = r + "," + g + "," + b;
+// function hexToRgb(path) {
+//     const points = path.getAttribute("fill").substring(1);
+//     const bigint = parseInt(points, 16);
+//     const r = (bigint >> 16) & 255;
+//     const g = (bigint >> 8) & 255;
+//     const b = bigint & 255;
+//     const color = r + "," + g + "," + b;
 
-    path.setAttribute("fill", `rgb( ${color})`);
-}
+//     path.setAttribute("fill", `rgb( ${color})`);
+// }
 
 const toPathsArray = [];
 const fromPathsArray = [];
@@ -80,7 +80,7 @@ function getPaths(animateTo) {
             console.log(toColor)
             console.log(fromColor)
             console.log(path)
-            TweenLite.to(path,1, {fill: "red"});
+            TweenMax.to(path, 1, { fill: toColor });
         });
     }
 }
