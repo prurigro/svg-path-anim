@@ -39,12 +39,12 @@ function getPaths(animateTo) {
 	   pathObj.fill = toPaths[i].getAttribute("fill");
 	   pathObj.x0 = d.match(/\M(.*)\,/)[1];
 	   pathObj.y0 = d.match(/\,(.*)\L/)[1];
-	   pathObj.L = d.substring(d.indexOf("L")+1).split(" ");
-	   pathObj.L0 = pathObj.L[0];
-	   pathObj.L1 = pathObj.L[1];
-	   pathObj.L2 = pathObj.L[2];
-	   pathObj.join = pathObj.L[3].slice(0, -1);
-	   
+	   L = d.substring(d.indexOf("L")+1).split(" ");
+	   pathObj.L0 = L[0];
+	   pathObj.L1 = L[1];
+	   pathObj.L2 = L[2];
+	   pathObj.join = L[3].slice(0, -1);
+
 	   	toPathsArray.push(pathObj);
 
 	});
