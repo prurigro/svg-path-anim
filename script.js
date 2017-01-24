@@ -20,7 +20,7 @@ function hexToRgb(path) {
     const b = bigint & 255;
     const color = r + "," + g + "," + b;
 
-    path.setAttribute("fill", `rgba( ${color}, 0.5)`);
+    path.setAttribute("fill", `rgb( ${color})`);
 }
 
 const toPathsArray = [];
