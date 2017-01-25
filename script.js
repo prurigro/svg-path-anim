@@ -10,9 +10,11 @@ let fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySe
 
 // click on link listener
 [].forEach.call(links, function(el, i, els) {
-    el.addEventListener('click', function() {
+    el.addEventListener("click", function(event) {
+        const animateTo = this.getAttribute("href").substring(1);
+
         [].forEach.call(els, function(el) {
-            if(el !== this) {
+            if (el !== this) {
                 el.classList.remove("active");
             } else {
                 this.classList.add("active");
@@ -20,32 +22,27 @@ let fromPathsArray = getPathsArray(document.querySelector(".svg-holder").querySe
         }, this);
 
         event.preventDefault();
-        const animateTo = this.getAttribute("href").substring(1);
         this.classList.add("active");
-
         getPaths(animateTo);
     });
 });
-
 
 function getPathsArray(object) {
     const pathsArray = [];
 
     Array.from(object).forEach((path, i) => {
         const coordinates = getCoordinates(path);
-        const pathObj = {};
 
-        pathObj.fill = path.getAttribute("fill");
-        pathObj.x0 = coordinates[1];
-        pathObj.y0 = coordinates[2];
-        pathObj.L0 = coordinates[3];
-        pathObj.L1 = coordinates[4];
-        pathObj.L2 = coordinates[5];
-        pathObj.join = coordinates[6];
-
-        pathsArray.push(pathObj);
+        pathsArray.push({
+            fill: path.getAttribute("fill"),
+            x0: coordinates[1],
+            y0: coordinates[2],
+            L0: coordinates[3],
+            L1: coordinates[4],
+            L2: coordinates[5],
+            join: coordinates[6]
+        });
     });
-   // console.log(pathsArray[0])
 
     return pathsArray;
 }
